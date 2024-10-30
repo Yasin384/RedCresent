@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
+DATABASES = {
+    'default': dj_database_url.config(conn_max_age=600)
+}
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -86,12 +90,7 @@ WSGI_APPLICATION = 'VolunteerPlatform.wsgi.application'
 
 # Other settings...
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),  # This line is modified
-    }
-}
+
 
 # AUTH_USER_MODEL and other configurations...
 
