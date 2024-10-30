@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .task-container {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 20px;
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .task-header {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #e24a4a;
+        position: relative;
+    }
+
+    .task-header h2 {
+        font-size: 32px;
+        font-weight: 600;
+        margin: 0;
+        padding-bottom: 10px;
+    }
+
+    .task-list {
+        list-style-type: none;
+        padding: 0;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+    }
+
+    .task-item {
+        padding: 20px;
+        border-bottom: 1px solid rgba(226, 74, 74, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+        background: #fff;
+    }
+
+    .task-item:last-child {
+        border-bottom: none;
+    }
+
+    .task-item:hover {
+        background-color: rgba(226, 74, 74, 0.02);
+        transform: translateX(5px);
+    }
+
+    .task-content {
+        flex: 1;
+        padding-right: 20px;
+    }
+
+    .task-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .task-description {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .task-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .invite-button {
+        background: linear-gradient(135deg, #e24a4a, #ff6b6b);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 6px rgba(226, 74, 74, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .invite-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 8px rgba(226, 74, 74, 0.3);
+    }
+
+    .completed-badge {
+        background: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .completed-badge i {
+        font-size: 14px;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: #666;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .task-container {
+            padding: 15px;
+            margin: 15px auto;
+        }
+
+        .task-header h2 {
+            font-size: 24px;
+        }
+
+        .task-item {
+            padding: 15px;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .task-content {
+            padding-right: 0;
+        }
+
+        .task-actions {
+            width: 100%;
+            justify-content: flex-end;
+        }
+    }
+</style>
+
+<div class="task-container">
+    <div class="task-header">
+        <h2>Task List</h2>
+    </div>
+
+    {% if tasks %}
+    <ul class="task-list">
+        {% for task in tasks %}
+        <li class="task-item">
+            <div class="task-content">
+                <span class="task-title">{{ task.title }}</span>
+                <span class="task-description">{{ task.description }}</span>
+                <p>Max Participants: {{ task.max_participants }}</p>
+                <p>Current Participants: {{ task.current_participants.count }}</p>
+            </div>
+            <div class="task-actions">
+                {% if not task.is_completed %}
+                <form action="{% url 'invite_to_task' task.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="invite-button">
+                        <i class="fas fa-user-plus"></i>
+                        Invite
+                    </button>
+                </form>
+                {% else %}
+                <span class="completed-badge">
+                    <i class="fas fa-check-circle"></i>
+                    Completed
+                </span>
+                {% endif %}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div class="empty-state">
+        <p>No tasks available at the moment.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

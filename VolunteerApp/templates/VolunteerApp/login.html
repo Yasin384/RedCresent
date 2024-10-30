@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Volunteer Platform{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #eaeff7;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #f01111;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            font-weight: 300;
+        }
+
+        header::after {
+            content: "";
+            display: block;
+            height: 3px;
+            background-color: #fff;
+            width: 70%;
+            margin: 12px auto;
+            border-radius: 5px;
+        }
+
+        /* Login Container */
+        .login-container {
+            max-width: 90%; /* Use percentage for better responsiveness */
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2em; /* Use relative units for better scaling */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        button {
+            background-color: #ef1212;
+            color: #fff;
+            border: none;
+            padding: 12px; /* Adjust padding for better touch interaction */
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em; /* Use relative unit */
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #357abd;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            color: #ea0b0b;
+            text-decoration: none;
+            font-size: 0.9em; /* Adjust font size for readability */
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive styles for smartphones */
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8em; /* Slightly smaller font size for small screens */
+            }
+
+            .login-container {
+                margin: 20px auto; /* Reduce margin for smaller screens */
+                padding: 15px; /* Reduce padding */
+            }
+
+            h2 {
+                font-size: 1.5em; /* Smaller heading size */
+            }
+
+            button {
+                font-size: 0.9em; /* Smaller button text */
+                padding: 10px; /* Adjust padding */
+            }
+
+            a {
+                font-size: 0.8em; /* Smaller link text */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Red Crescent</h1>
+    </header>
+
+    <main>
+        <div class="login-container">
+            <h2>Login</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Login</button>
+            </form>
+            <a href="{% url 'register' %}">Register</a>
+        </div>
+    </main>
+
+    <div class="touchbar">
+        <a href="{% url 'home' %}" title="Home"><i class="fas fa-home"></i></a>
+        <a href="{% url 'task_list' %}" title="Tasks"><i class="fas fa-tasks"></i></a>
+        <a href="{% url 'leaderboard' %}" title="Leaderboard"><i class="fas fa-trophy"></i></a>
+        <a href="{% url 'profile' %}" title="Profile"><i class="fas fa-user"></i></a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+        {% else %}
+            <a href="{% url 'login' %}" title="Login"><i class="fas fa-sign-in-alt"></i></a>
+        {% endif %}
+    </div>
+</body>
+</html>

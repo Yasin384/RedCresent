@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    .leaderboard-container {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    h2 {
+        font-size: 36px;
+        margin-bottom: 30px;
+        color: #e24a4a;
+        text-align: center;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(226, 74, 74, 0.1);
+        letter-spacing: 1px;
+    }
+
+    .leaderboard-list {
+        list-style: none;
+        padding: 0;
+        width: 100%;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(226, 74, 74, 0.1);
+        overflow: hidden;
+        border: 2px solid rgba(226, 74, 74, 0.1);
+    }
+
+    .leaderboard-item {
+        padding: 20px 25px;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+        border-bottom: 1px solid rgba(226, 74, 74, 0.1);
+        position: relative;
+    }
+
+    /* Top 3 Styles */
+    .leaderboard-item:nth-child(1) {
+        background: linear-gradient(90deg, rgba(226, 74, 74, 0.15), rgba(226, 74, 74, 0.05));
+    }
+
+    .leaderboard-item:nth-child(2) {
+        background: linear-gradient(90deg, rgba(226, 74, 74, 0.1), rgba(226, 74, 74, 0.02));
+    }
+
+    .leaderboard-item:nth-child(3) {
+        background: linear-gradient(90deg, rgba(226, 74, 74, 0.05), rgba(226, 74, 74, 0.01));
+    }
+
+    .leaderboard-item:hover {
+        transform: translateX(5px);
+        background-color: rgba(226, 74, 74, 0.05);
+    }
+
+    .leaderboard-item:last-child {
+        border-bottom: none;
+    }
+
+    .username {
+        font-weight: 600;
+        color: #333;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .position {
+        width: 32px;
+        height: 32px;
+        background: #e24a4a;
+        color: white;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 3px 6px rgba(226, 74, 74, 0.2);
+    }
+
+    /* Special badges for top 3 */
+    .leaderboard-item:nth-child(1) .position {
+        background: linear-gradient(135deg, #e24a4a, #ff6b6b);
+        font-size: 16px;
+    }
+
+    .leaderboard-item:nth-child(2) .position {
+        background: linear-gradient(135deg, #e24a4a, #ff8585);
+    }
+
+    .leaderboard-item:nth-child(3) .position {
+        background: linear-gradient(135deg, #e24a4a, #ff9e9e);
+    }
+
+    .hours {
+        font-weight: 600;
+        font-size: 16px;
+        color: #fff;
+        background: #e24a4a;
+        padding: 8px 15px;
+        border-radius: 20px;
+        box-shadow: 0 3px 6px rgba(226, 74, 74, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .hours i {
+        font-size: 14px;
+    }
+
+    /* Achievement badges */
+    .achievement-badge {
+        background: rgba(226, 74, 74, 0.1);
+        color: #e24a4a;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        margin-left: 10px;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .leaderboard-container {
+            padding: 10px;
+        }
+
+        h2 {
+            font-size: 28px;
+        }
+
+        .leaderboard-item {
+            padding: 15px 20px;
+        }
+
+        .username {
+            font-size: 16px;
+        }
+
+        .hours {
+            font-size: 14px;
+            padding: 6px 12px;
+        }
+
+        .position {
+            width: 28px;
+            height: 28px;
+            font-size: 12px;
+        }
+    }
+</style>
+
+<div class="leaderboard-container">
+    <h2>Volunteer Leaderboard</h2>
+    <ul class="leaderboard-list">
+        {% for volunteer in volunteers %}
+        <li class="leaderboard-item">
+            <span class="username">
+                <span class="position">{{ forloop.counter }}</span>
+                {{ volunteer.user.username }}
+                {% if forloop.counter == 1 %}
+                <span class="achievement-badge">
+                    <i class="fas fa-crown"></i> Top Volunteer
+                </span>
+                {% endif %}
+            </span>
+            <span class="hours">
+                <i class="fas fa-clock"></i>
+                {{ volunteer.total_hours }} hours
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<style>
+    .profile-container {
+        max-width: 800px;
+        margin: 0 auto;
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .profile-header {
+        background: linear-gradient(135deg, #e24a4a, #ff6b6b);
+        color: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(226, 74, 74, 0.2);
+    }
+
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        background-color: #fff;
+        border-radius: 50%;
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-avatar i {
+        font-size: 50px;
+        color: #e24a4a;
+    }
+
+    .profile-header h2 {
+        margin: 0;
+        font-size: 32px;
+        font-weight: 600;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-details {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .profile-item {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid rgba(226, 74, 74, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .profile-item:last-child {
+        border-bottom: none;
+    }
+
+    .profile-item:hover {
+        background-color: rgba(226, 74, 74, 0.02);
+        transform: translateX(5px);
+    }
+
+    .profile-item i {
+        font-size: 24px;
+        color: #e24a4a;
+        margin-right: 15px;
+        width: 30px;
+        text-align: center;
+    }
+
+    .profile-label {
+        font-weight: 600;
+        color: #666;
+        width: 120px;
+    }
+
+    .profile-value {
+        color: #333;
+        flex: 1;
+        font-weight: 500;
+    }
+
+    .achievements {
+        margin-top: 25px;
+        background: linear-gradient(135deg, rgba(226, 74, 74, 0.05), rgba(255, 107, 107, 0.05));
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .achievements h3 {
+        color: #e24a4a;
+        margin-bottom: 15px;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .achievement-badges {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .badge {
+        background: #fff;
+        padding: 10px 20px;
+        border-radius: 25px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 3px 10px rgba(226, 74, 74, 0.1);
+    }
+
+    .badge i {
+        color: #e24a4a;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .profile-header {
+            padding: 20px;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+        }
+
+        .profile-header h2 {
+            font-size: 24px;
+        }
+
+        .profile-item {
+            padding: 15px;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .profile-label {
+            margin-bottom: 5px;
+        }
+
+        .profile-item i {
+            margin-bottom: 10px;
+        }
+    }
+</style>
+
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <i class="fas fa-user"></i>
+        </div>
+        <h2>{{ profile.user.username }}'s Profile</h2>
+    </div>
+
+    <div class="profile-details">
+        <div class="profile-item">
+            <i class="fas fa-user"></i>
+            <span class="profile-label">Username</span>
+            <span class="profile-value">{{ profile.user.username }}</span>
+        </div>
+
+        <div class="profile-item">
+            <i class="fas fa-envelope"></i>
+            <span class="profile-label">Email</span>
+            <span class="profile-value">{{ profile.user.email }}</span>
+        </div>
+
+        <div class="profile-item">
+            <i class="fas fa-clock"></i>
+            <span class="profile-label">Total Hours</span>
+            <span class="profile-value">{{ profile.total_hours }} hours</span>
+        </div>
+
+        <div class="achievements">
+            <h3>Achievements</h3>
+            <div class="achievement-badges">
+                {% if profile.total_hours >= 50 %}
+                <div class="badge">
+                    <i class="fas fa-star"></i>
+                    <span>Dedicated Volunteer</span>
+                </div>
+                {% endif %}
+                
+                {% if profile.total_hours >= 100 %}
+                <div class="badge">
+                    <i class="fas fa-award"></i>
+                    <span>Expert Volunteer</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Volunteer Platform{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #e24a4a;
+            --secondary-color: #f8f9fa;
+            --accent-color: #6366f1;
+            --text-dark: #333;
+            --text-light: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f6f8fb, #eaeff7);
+        }
+
+        /* Header styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #ff6b6b);
+            color: var(--text-light);
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        header::after {
+            content: "";
+            display: block;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.3);
+            width: 60%;
+            margin: 12px auto;
+            border-radius: 5px;
+        }
+
+        /* Main content styles */
+        main {
+            flex: 1;
+            padding: 25px;
+            margin: 20px auto 90px;
+            background-color: var(--text-light);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            max-width: 1000px;
+            width: 95%;
+        }
+
+        /* Leaderboard specific styles */
+        .leaderboard-container {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .leaderboard-list {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .leaderboard-item {
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .leaderboard-item:hover {
+            transform: translateX(5px);
+            background-color: rgba(99, 102, 241, 0.05);
+        }
+
+        /* Touchbar styles */
+        .touchbar {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(51, 51, 51, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            z-index: 1000;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .touchbar a {
+            color: var(--text-light);
+            text-decoration: none;
+            text-align: center;
+            flex: 1;
+            padding: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .touchbar a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .touchbar i {
+            font-size: 24px;
+        }
+
+        .touchbar a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .touchbar a:hover::after {
+            width: 30px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Red Crescent Info styles */
+        .red-crescent-info {
+            text-align: center;
+            margin: 20px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(226, 74, 74, 0.05), rgba(255, 107, 107, 0.05));
+            border-radius: 15px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .red-crescent-info p {
+            font-size: 17px;
+            color: #555;
+            line-height: 1.7;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            main {
+                padding: 15px;
+                margin: 15px auto 80px;
+            }
+
+            .touchbar {
+                padding: 8px 0;
+            }
+
+            .touchbar i {
+                font-size: 22px;
+            }
+
+            .red-crescent-info p {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Red Crescent</h1>
+    </header>
+
+    <main>
+        {% if request.path == '/base/' %}
+        <div class="red-crescent-info">
+            <p>The Red Crescent is a humanitarian organization that provides emergency assistance, disaster relief, and education in communities affected by disasters or conflicts. It is part of the International Red Cross and Red Crescent Movement.</p>
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <div class="touchbar">
+        <a href="{% url 'home' %}" title="Home"><i class="fas fa-home"></i></a>
+        <a href="{% url 'task_list' %}" title="Tasks"><i class="fas fa-tasks"></i></a>
+        <a href="{% url 'leaderboard' %}" title="Leaderboard"><i class="fas fa-trophy"></i></a>
+        <a href="{% url 'profile' %}" title="Profile"><i class="fas fa-user"></i></a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+        {% else %}
+            <a href="{% url 'login' %}" title="Login"><i class="fas fa-sign-in-alt"></i></a>
+        {% endif %}
+    </div>
+</body>
+</html>
