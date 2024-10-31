@@ -1,6 +1,0 @@
-services:
-  - type: web
-    name: VolunteerPlatform
-    env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn VolunteerPlatform.wsgi:application"
