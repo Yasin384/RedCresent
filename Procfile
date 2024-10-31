@@ -1,1 +1,2 @@
-web: gunicorn VolunteerPlatform.wsgi:application --chdir D:\YASIN\VolunteerPlatform\VolunteerPlatform
+web: daphne -p 8000 VolunteerPlatform.asgi:application
+
