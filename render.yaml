@@ -3,4 +3,4 @@ services:
     name: VolunteerPlatform
     env: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn VolunteerPlatform.wsgi:VolunteerApp"
+    startCommand: "gunicorn VolunteerPlatform.wsgi:application"
