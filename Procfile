@@ -1,2 +1,1 @@
-web: gunicorn VolunteerPlatform.wsgi:application --chdir D:\YASIN\VolunteerPlatform\VolunteerPlatform
-
+web: waitress-serve --host=0.0.0.0 --port=$PORT VolunteerPlatform.wsgi:application
