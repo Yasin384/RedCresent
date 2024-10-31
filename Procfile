@@ -1,1 +1,1 @@
-web: gunicorn VolunteerPlatform.wsgi --log-file -
+gunicorn VolunteerPlatform.wsgi:application
